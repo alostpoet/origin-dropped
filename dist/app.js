@@ -212,3 +212,4 @@ class PageNav {
 
 window.OriginPoets = new Origins();
 window.pageNav = new PageNav();
+window.clearCache = OriginPoets.clear;
