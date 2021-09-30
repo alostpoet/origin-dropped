@@ -82,6 +82,11 @@
                     this.cachedProgress.increase();
                 }
 
+                if (typeof data === 'undefined') {
+                    this.found = false;
+                    break;
+                }
+
                 if (this.verify(data)) {
                     this.found = true;
                     break;
