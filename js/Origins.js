@@ -8,17 +8,31 @@ export class Origins {
 
     constructor() {
         this.progress = new Stats(this._totalOrigins);
-        this.cachedProgress = new Stats(this._totalOrigins,'cached');
     }
 
     reset() {
         this.found = false;
         this.progress.reset();
-        this.cachedProgress.reset();
+    }
+
+    async findByOsLink() {
+        this.reset();
+        pageNav.to('retrievePoetPage');
+
+        const poetNumber = document.getElementById('osLink').value.trim().split('/').pop();
+        let data = await this.fetchOrigin(poetNumber);
+        console.log('Retrieved poet', data);
+
+        const origin = this.getAttribute('Origin', data);
+        console.log('Got Origin', origin);
+        document.getElementById('originCode').value = origin;
+
+        return this.start();
     }
 
     async start() {
         this.reset();
+        pageNav.to('noCachePage');
 
         this._poetNumber = this._startOrigin;
         for (this._poetNumber; this._poetNumber <= this._totalOrigins; this._poetNumber++) {
@@ -27,7 +41,6 @@ export class Origins {
                 data = await this.fetchOrigin(this._poetNumber);
             } else {
                 data = this.cached(`origin_${this._poetNumber}`)
-                this.cachedProgress.increase();
             }
 
             if (typeof data === 'undefined') {
@@ -51,10 +64,13 @@ export class Origins {
             const dropped = document.getElementById('dropped');
             dropped.innerHTML = `<a target="_blank" href="https://opensea.io/assets/0x4b3406a41399c7fd2ba65cbc93697ad9e7ea61e5/${this._poetNumber}">View on OpenSea</a>`;
         }
+
+        pageNav.to('results');
+        document.getElementById('originCode').value = '';
     }
 
     get input() {
-        return document.getElementById('originCode').value.trim();
+        return document.getElementById('originCode').value.trim().toUpperCase();
     }
 
     set found(val) {
@@ -62,9 +78,9 @@ export class Origins {
         this._found = val;
 
         if (this._found) {
-            document.getElementById('result').innerHTML = `<h1>Origin ${this.input} has been dropped already.</h1>`
+            document.getElementById('result').innerHTML = `<h1>Origin #${this.input} has been dropped already.</h1>`
         } else {
-            document.getElementById('result').innerHTML = `<h1>Origin ${this.input} is still available!</h1>`
+            document.getElementById('result').innerHTML = `<h1>Origin #${this.input} is still available!</h1>`
         }
     }
 
@@ -88,6 +104,8 @@ export class Origins {
         for (origin; origin <= this._totalOrigins; origin++) {
             this.clearCache(origin);
         }
+
+        pageNav.to('startPage');
     }
 
     clearCache(key) {

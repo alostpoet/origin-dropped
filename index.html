@@ -6,17 +6,108 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Is the Origin dropped yet?</title>
+    <style>
+        body, html {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+        body * {
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            background: #000;
+            color: #fff;
+            font-family: Arial, sans-serif;
+        }
+        .page {
+            display: none;
+            transition: opacity .2s ease;
+        }
+        .page.show {
+            display: block;
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-content: center;
+            height: 100vh;
+            max-width: 350px;
+            margin: 0 auto;
+        }
+        a {
+            cursor: pointer;
+        }
+        a.block {
+            display: block;
+            padding: 20px 30px;
+            outline: 2px #fff solid;
+            outline-offset: -2px;
+            text-decoration: none;
+            transition: all .5s ease;
+            background: rgba(0,0,0,0.8);
+            text-align: center;
+            text-transform: uppercase;
+        }
+        a.block:hover {
+            background: rgba(255,255,255,0.2);
+        }
+        .centered {
+            text-align: center;
+        }
+        input[type=text] {
+            display: block;
+            padding: 20px 30px;
+            outline: 2px #fff solid;
+            outline-offset: -2px;
+            text-decoration: none;
+            transition: all .5s ease;
+            background: rgba(0,0,0,0.8);
+            text-align: center;
+            text-transform: uppercase;
+            color: #fff;
+            width: 286px;
+        }
+    </style>
 </head>
 <body>
-<div id="app">
-    <label for="originCode">Origin Code</label><input type="text" id="originCode" value="O7IP" />
-    <button onclick="OriginPoets.start()">Is My Origin Dropped?</button>
-    <button onclick="OriginPoets.clear()">Clear cache</button>
-    <span id="progress"></span>
-    <span id="cached"></span>
+<div id="app" class="container">
+    <div class="page centered" id="startPage">
+        <a class="block" id="useOriginCode" onclick="pageNav.to('originCodePage')">Use Origin Trait</a> or <a class="block" id="useOSUrl" onclick="pageNav.to('osLinkPage')">Use OpenSea Link</a>
+    </div>
+
+    <div class="page" id="originCodePage">
+        <a onclick="pageNav.back()">&larr; Back</a>
+        <input type="text" id="originCode" placeholder="Enter Origin Trait" maxlength="4"/>
+        <a class="block" onclick="OriginPoets.start()">Find the Origin</a>
+    </div>
+
+    <div class="page" id="osLinkPage">
+        <a onclick="pageNav.back()">&larr; Back</a>
+        <input type="text" id="osLink" placeholder="Paste the OpenSea link here" />
+        <a class="block" onclick="OriginPoets.findByOsLink()">Find the Origin</a>
+    </div>
+
+    <div class="page" id="retrievePoetPage">
+        <p>Retrieving Poet information...</p>
+    </div>
+
+    <div class="page" id="noCachePage">
+        <a onclick="pageNav.back()">&larr; Back</a>
+        <span id="progress"></span>
+        <p>Gathering intel...</p>
+    </div>
+
+    <div class="page" id="results">
+        <a onclick="pageNav.to('startPage')">&larr; Try another</a>
+
+        <div id="result"></div>
+        <div id="dropped"></div>
+    </div>
 </div>
-<div id="result"></div>
-<div id="dropped"></div>
-<script type="module" src="./dist/app.min.js?v=1633029460557"></script>
+<script type="module" src="./dist/app.js?v=1633038910963"></script>
 </body>
 </html>
