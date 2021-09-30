@@ -88,9 +88,38 @@
             color: #fff;
             width: 286px;
         }
+        nav {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            color: #fff;
+        }
+        nav a {
+            text-decoration: none;
+            color: #fff;
+            border: none;
+            outline: 3px solid #fff;
+            outline-offset: -3px;
+            background: rgba(0,0,0,1);
+            padding: 10px 20px;
+            font-size: 14px;
+            text-transform: uppercase;
+            font-weight: bolder;
+            transition: background-color .4s ease;
+        }
+        nav a:hover {
+            background: rgba(255,255,255,0.2);
+            outline-width: 4px;
+            outline-offset: -4px;
+        }
     </style>
 </head>
 <body>
+
+<nav>
+    <a href="https://alostpoet.xyz">&larr; Back to A Lost Poet</a>
+</nav>
+
 <div id="app" class="container">
     <div class="page centered" id="startPage">
         <a class="block" id="useOriginCode" onclick="pageNav.to('originCodePage')">Use Origin Trait</a> or <a class="block" id="useOSUrl" onclick="pageNav.to('osLinkPage')">Use OpenSea Link</a>
@@ -126,6 +155,6 @@
     </div>
 </div>
 <img src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Forigin-dropped.alostpoet.xyz&count_bg=%23005788&title_bg=%23000000&icon=&icon_color=%23E7E7E7&title=Origins+checked+today+%2F+all+time&edge_flat=false"/>
-<script type="module" src="./dist/app.min.js?v=1633042631700"></script>
+<script type="module" src="./dist/app.min.js?v=1633042832834"></script>
 </body>
 </html>
