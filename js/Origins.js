@@ -1,3 +1,5 @@
+import {Stats} from "./Stats";
+
 export class Origins {
     _totalOrigins = 1024;
     _startOrigin = 1;
